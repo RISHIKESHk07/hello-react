@@ -3,14 +3,15 @@ name: Run tests
 on:
   push:
     branches:
-      - 'main'
+      - 'dev'
 
 jobs:
-
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Run NPM tests
+      - name: Set up dev dependencies
+        run: npm install --save-dev
+      - name: Run tests
         run: npm run test
