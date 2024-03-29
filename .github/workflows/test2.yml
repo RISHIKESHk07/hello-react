@@ -1,22 +1,19 @@
-name: Add New Issue to Project
+name: Add Project Item
 
 on:
   issues:
     types: [opened]
 
 jobs:
-  add_to_project:
+  add_project_item:
     runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GITHUB_EVENT_PATH: ${{ github.event_path }}
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
 
-      - name: Add Issue to Project
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Add project item
         run: |
-          issue_number=$(jq --raw-output .issue.number "$GITHUB_EVENT_PATH")
-          project_id=$(gh api /repos/${{ github.repository }}/projects | jq '.[] | select(.name == "test") | .id')
-          column_id=$(gh api /projects/${project_id}/columns | jq '.[] | select(.name == "Backlog") | .id')
-          gh api -X POST /projects/columns/${column_id}/cards -F content_id=$issue_number -F content_type=Issue
+          gh project item-add 1 --owner RISHIKESHk07 --url ${{ github.event.issue.html_url }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
