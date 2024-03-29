@@ -17,6 +17,6 @@ jobs:
       - name: Add Issue to Project
         run: |
           issue_number=$(jq --raw-output .issue.number "$GITHUB_EVENT_PATH")
-          project_id=$(gh api /repos/${{ github.repository }}/projects | jq '.[] | select(.name == "<PROJECT_NAME>") | .id')
+          project_id=$(gh api /repos/${{ github.repository }}/projects | jq '.[] | select(.name == "test") | .id')
           column_id=$(gh api /projects/${project_id}/columns | jq '.[] | select(.name == "Backlog") | .id')
           gh api -X POST /projects/columns/${column_id}/cards -F content_id=$issue_number -F content_type=Issue
