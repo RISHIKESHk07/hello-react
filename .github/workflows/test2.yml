@@ -12,7 +12,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       PROJECT_OWNER: RISHIKESHk07
       PROJECT_URL: https://github.com/RISHIKESHk07/hello-react/issues/
-      PROJECT_ID: PVT_kwHOBwGzX84AfSi0
+      PROJECT_ID: 1
 
     steps:
     - name: Checkout repository
