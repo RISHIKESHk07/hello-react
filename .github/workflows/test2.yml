@@ -20,4 +20,4 @@ jobs:
 
     - name: Add to project
       run: |
-        gh project item-add ${{ env.PROJECT_ID }} --owner ${{ env.PROJECT_OWNER }} --url ${{ env.PROJECT_URL }}${{ github.event.issue.number }}
+        gh project item-add ${{ env.PROJECT_ID }} --owner "${{ env.PROJECT_OWNER }}" --url ${{ env.PROJECT_URL }}${{ github.event.issue.number }}
