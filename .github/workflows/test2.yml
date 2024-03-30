@@ -14,6 +14,6 @@ jobs:
       
       - name: Add project item
         run: |
-          gh project item-add 1 --owner RISHIKESHk07 --url ${{ github.event.issue.html_url }}
+          gh api graphql -f query='{viewer {projects(first: 100) {nodes {name number}}}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
