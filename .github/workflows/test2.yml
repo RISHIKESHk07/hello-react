@@ -9,12 +9,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      
-      - name: Add project item
-        run: |
-           gh project list
+    - name: Listing projects
+      run: |
+        gh project list
+
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Add to project
+      run: |
+        gh project add-item ${{ secrets.PROJECT_ID }} --content-type issue --issue ${{ github.event.issue.number }}
+
+    - name: Add to backlog
+      run: |
+        gh project add-item ${{ secrets.BACKLOG_ID }} --content-type issue --issue ${{ github.event.issue.number }}
            
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      BACKLOG_ID: ${{ secrets.BACKLOG_ID }}
