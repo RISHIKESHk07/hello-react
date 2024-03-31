@@ -8,16 +8,33 @@ jobs:
   add_project_item:
     runs-on: ubuntu-latest
 
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      PROJECT_OWNER: RISHIKESHk07
-      PROJECT_URL: https://github.com/RISHIKESHk07/hello-react/issues/
-      PROJECT_ID: 1
-
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Get repository owner and name
+      id: repo_info
+      run: |
+        echo "::set-output name=owner::$(echo ${GITHUB_REPOSITORY} | cut -d '/' -f 1)"
+        echo "::set-output name=reponame::$(echo ${GITHUB_REPOSITORY} | cut -d '/' -f 2)"
+
+    - name: Get project ID
+      id: project_info
+      run: |
+        project_id=$(gh api graphql -f query='query {
+          repository(owner: "${{ steps.repo_info.outputs.owner }}", name: "${{ steps.repo_info.outputs.reponame }}") {
+            projects(first: 1) {
+              nodes {
+                id
+              }
+            }
+          }
+        }' | jq -r '.data.repository.projects.nodes[0].id')
+        echo "::set-output name=project_id::$project_id"
+
     - name: Add to project
       run: |
-        gh project item-add ${{ env.PROJECT_ID }} --owner "${{ env.PROJECT_OWNER }}" --url ${{ env.PROJECT_URL }}${{ github.event.issue.number }}
+        gh project item-add ${{ steps.project_info.outputs.project_id }} --url ${{ github.event.issue.html_url }}
+           
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
