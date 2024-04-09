@@ -1,4 +1,4 @@
-name: Add label and set status on issue open
+name: Add label and set status on issue open 2
 
 on:
   issues:
