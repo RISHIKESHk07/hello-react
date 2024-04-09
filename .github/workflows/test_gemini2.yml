@@ -1,0 +1,36 @@
+name: Add label and set status on issue open
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  label_and_status:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Add "todo" label
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.issues.addLabel({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              label: 'todo'
+            })
+
+      - name: Set status to "To Do" (using Projects API)  # Recommended (requires project write access)
+        uses: actions/github-script@v6
+        with:
+          script: |
+            # Assuming your project column name is "To Do" (adjust if needed)
+            const todoColumnId = PROJECT_COLUMN_ID;  # Replace with actual project column ID
+            github.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              project_id: PROJECT_ID,  # Replace with actual project ID
+              column_id: todoColumnId
+            })
