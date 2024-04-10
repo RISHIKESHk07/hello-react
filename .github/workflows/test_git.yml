@@ -1,0 +1,13 @@
+name: The kondradparabajan
+on:
+  issues:
+    types: [opened]
+jobs:
+  Add_New_Issue_To_Project:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: konradpabjan/actions-add-new-issue-to-column@v1.1
+      with:
+        action-token: "${{ secrets.Access_token }}"
+        project-url: "https://github.com/RISHIKESHk07/hello-react/projects/1"
+        column-name: "Todo"
