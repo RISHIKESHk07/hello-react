@@ -16,5 +16,4 @@ jobs:
           # to the issue
           project-url: https://github.com/RISHIKESHk07/hello-react/1
           github-token: ${{ secrets.ACCESS_TOKEN }}
-          labeled: bug, needs-triage
-          label-operator: OR
+          
