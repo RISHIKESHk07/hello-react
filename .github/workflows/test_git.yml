@@ -8,6 +8,6 @@ jobs:
     steps:
     - uses: konradpabjan/actions-add-new-issue-to-column@v1.1
       with:
-        action-token: "${{ secrets.Access_token }}"
+        action-token: ${{ secrets.Access_token }}
         project-url: "https://github.com/RISHIKESHk07/hello-react/projects/1"
         column-name: "Todo"
