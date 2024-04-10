@@ -22,7 +22,7 @@ jobs:
             })
 
       - name: Add to project with "todo" status (limited functionality)
-        uses: actions/add-to-project@v2
+        uses: actions/add-to-project@v1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           project_number: ${{ github.event.project.number }}  # This might not work as expected
